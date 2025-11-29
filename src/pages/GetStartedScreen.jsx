@@ -53,14 +53,15 @@ const GetStartedScreen = () => {
           Your intelligent companion for proactive mental wellness and emotional fitness.
         </p>
 
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={onGetStarted}
-          className="btn btn-primary mt-12 w-full"
-        >
-          Get Started
-        </motion.button>
+     <motion.button
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  onClick={onGetStarted}
+  className="mt-12 w-full bg-white text-black border border-gray-300 rounded-lg py-3"
+>
+  Get Started
+</motion.button>
+
 
         <p className="mt-8 text-xs text-white/60">
           Taking care of your mental health, one step at a time.
