@@ -1,4 +1,5 @@
-LIVE LINKn : spiffy-biscotti-90e2f8.netlify.app
+LIVE_LINK : [spiffy-biscotti-90e2f8.netlify.app](https://spiffy-biscotti-90e2f8.netlify.app
+)
 
 🧠 EmoCare+ : AI-Powered Mental Health Ecosystem
 
