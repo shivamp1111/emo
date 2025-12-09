@@ -57,30 +57,60 @@ export const AuthProvider = ({ children }) => {
 
   // Replicates _authService.login
   const login = async (email, password) => {
-    // FIX: Add /api prefix
-    const response = await api.post('/api/auth/login', { email, password });
-    
-    const { access_token, user } = response.data;
-    
-    localStorage.setItem('access_token', access_token);
-    localStorage.setItem('user', JSON.stringify(user)); // Save user info too
-    
-    setToken(access_token);
-    setUser(user);
+    try {
+      // FIX: Add /api prefix
+      const response = await api.post('/api/auth/login', { email, password });
+      
+      const { access_token, user } = response.data;
+      
+      localStorage.setItem('access_token', access_token);
+      localStorage.setItem('user', JSON.stringify(user)); // Save user info too
+      
+      setToken(access_token);
+      setUser(user);
+    } catch (error) {
+      // Handle specific error cases
+      if (error.response?.status === 401) {
+        throw new Error('Invalid email or password. Please try again.');
+      } else if (error.response?.status === 404) {
+        throw new Error('User not found. Please check your email.');
+      } else if (error.response?.data?.message) {
+        throw new Error(error.response.data.message);
+      } else if (error.message) {
+        throw error;
+      } else {
+        throw new Error('Login failed. Please try again.');
+      }
+    }
   };
 
   // Replicates _authService.register
   const register = async (name, email, password) => {
-    // FIX: Add /api prefix
-    const response = await api.post('/api/auth/register', { name, email, password });
+    try {
+      // FIX: Add /api prefix
+      const response = await api.post('/api/auth/register', { name, email, password });
 
-    const { access_token, user } = response.data;
+      const { access_token, user } = response.data;
 
-    localStorage.setItem('access_token', access_token);
-    localStorage.setItem('user', JSON.stringify(user)); // Save user info too
-    
-    setToken(access_token);
-    setUser(user);
+      localStorage.setItem('access_token', access_token);
+      localStorage.setItem('user', JSON.stringify(user)); // Save user info too
+      
+      setToken(access_token);
+      setUser(user);
+    } catch (error) {
+      // Handle specific error cases
+      if (error.response?.status === 409) {
+        throw new Error('This email is already registered. Please try logging in instead.');
+      } else if (error.response?.status === 400) {
+        throw new Error(error.response.data?.message || 'Invalid registration data. Please check your information.');
+      } else if (error.response?.data?.message) {
+        throw new Error(error.response.data.message);
+      } else if (error.message) {
+        throw error;
+      } else {
+        throw new Error('Registration failed. Please try again.');
+      }
+    }
   };
 
   // Replicates _authService.logout

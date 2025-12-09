@@ -26,7 +26,9 @@ const LoginScreen = () => {
       }
       localStorage.setItem('hasSeenGetStarted', 'true');
     } catch (err) {
-      setError(err.response?.data?.message || err.message || 'An error occurred.');
+      // Display user-friendly error message
+      const errorMessage = err.message || err.response?.data?.message || 'An error occurred. Please try again.';
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
